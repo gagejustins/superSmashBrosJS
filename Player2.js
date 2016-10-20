@@ -34,13 +34,64 @@ function Player2(x, y, world) {
     image(this.currentImage, this.x, this.y);
     //Display health
     fill(0);
-    text( "Player Two Health", width-230, 80)
+    text( "Player Two Health: " + this.health, width-230, 80)
     stroke(255,0,0);
     strokeWeight(10);
     line(width-130,100,width-(this.health+130),100);
     strokeWeight(0)
   }
+  
+  //Check for hit
+  this.checkHit = function(enemy_x, enemy_y) {
+    
+    if ( dist(this.x, this.y, enemy_x, enemy_y) <= 40 && keyIsDown(69) ) {
+      
+      this.health -= 10;
+      
+      //Set minimum health to 0
+      if (this.health <= 0) {
+        this.health = 0;
+      }
+      
+      this.bounceBack();
+      
+    }
+    
+  }
+  
+  //Bounce back function after hit
+  this.bounceBack = function() {
+    
+    if(this.currentImage==this.artworkRight) {
+      
+      for(var i=0; i<60; i++) {
+        // see which tile is to our left
+        var tile = world.getTile(this.left[0], this.left[1]);
+  
+        // is this tile solid?
+        if (!world.isTileSolid(tile)) {
+          // move
+          this.x --;
+        }
+      }
+      
+    } else {
+      
+      for(var i=0; i<60; i++) {
+        // see which tile is to our right
+        var tile = world.getTile(this.right[0], this.right[1]);
+  
+        // is this tile solid?
+        if (!world.isTileSolid(tile)) {
+          // move
+          this.x ++;
+        }
+      }
 
+    }
+    
+  }
+  
   // display "sensor" positions
   this.displaySensor = function(direction) {
     fill(255);

@@ -48,11 +48,14 @@ function setup() {
 }
 
 function draw() {
+  
   theWorld.displayWorld()
   thePlayer1.move();
   thePlayer1.display();
   thePlayer2.move();
   thePlayer2.display();
   thePlayer1.checkHit(thePlayer2.x, thePlayer2.y);
+  thePlayer2.checkHit(thePlayer1.x, thePlayer1.y);
+  
 }
 

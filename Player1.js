@@ -34,7 +34,7 @@ function Player1(x, y, world) {
     image(this.currentImage, this.x, this.y);
     //Display health
     fill(0);
-    text( "Player One Health", 70, 80)
+    text( "Player One Health: " + this.health, 70, 80)
     stroke(255,0,0);
     strokeWeight(10);
     line(70,100,this.health+70,100);
@@ -44,13 +44,16 @@ function Player1(x, y, world) {
   //Check for hit
   this.checkHit = function(enemy_x, enemy_y) {
     
-    if (dist(this.x, this.y, enemy_x, enemy_y) <= 50) {
+    if ( dist(this.x, this.y, enemy_x, enemy_y) <= 40 && keyIsDown(16) ) {
+      
       this.health -= 10;
       
       //Set minimum health to 0
       if (this.health <= 0) {
         this.health = 0;
       }
+      
+      this.bounceBack();
       
     }
     
@@ -59,7 +62,33 @@ function Player1(x, y, world) {
   //Bounce back function after hit
   this.bounceBack = function() {
     
-    
+    if(this.currentImage==this.artworkRight) {
+      
+      for(var i=0; i<60; i++) {
+        // see which tile is to our left
+        var tile = world.getTile(this.left[0], this.left[1]);
+  
+        // is this tile solid?
+        if (!world.isTileSolid(tile)) {
+          // move
+          this.x --;
+        }
+      }
+      
+    } else {
+      
+      for(var i=0; i<60; i++) {
+        // see which tile is to our right
+        var tile = world.getTile(this.right[0], this.right[1]);
+  
+        // is this tile solid?
+        if (!world.isTileSolid(tile)) {
+          // move
+          this.x ++;
+        }
+      }
+
+    }
     
   }
 
