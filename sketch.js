@@ -1,6 +1,6 @@
 // SPECIAL NOTE: This program uses a number of external JavaScript files to organize some of
 // the objects that we need to fully implement a tile-based game.  These JavaScript files
-// are referenced in the HTML document.  References to these documents are also included 
+// are referenced in the HTML document.  References to these documents are also included
 // as comments within this file.
 
 // our world object - this object handles our tiles, drawing the world and converting screen
@@ -11,7 +11,7 @@ var theWorld;
 var thePlayer1;
 var thePlayer2;
 
-// create an object to hold our "world parameters" - we will send this object into our 
+// create an object to hold our "world parameters" - we will send this object into our
 // OverheadWorld to tell it how our world is organized
 var worldParameters = {
   tileSize: 50,
@@ -53,4 +53,10 @@ function draw() {
   thePlayer1.display();
   thePlayer2.move();
   thePlayer2.display();
+<<<<<<< HEAD
+  thePlayer1.checkHit(thePlayer2.x, thePlayer2.y);
 }
+=======
+  
+}
+>>>>>>> origin/master

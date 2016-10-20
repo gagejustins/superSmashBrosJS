@@ -32,6 +32,35 @@ function Player1(x, y, world) {
   this.display = function() {
     imageMode(CORNER);
     image(this.currentImage, this.x, this.y);
+    //Display health
+    fill(0);
+    text( "Player One Health", 70, 80)
+    stroke(255,0,0);
+    strokeWeight(10);
+    line(70,100,this.health+70,100);
+    strokeWeight(0)
+  }
+  
+  //Check for hit
+  this.checkHit = function(enemy_x, enemy_y) {
+    
+    if (dist(this.x, this.y, enemy_x, enemy_y) <= 50) {
+      this.health -= 10;
+      
+      //Set minimum health to 0
+      if (this.health <= 0) {
+        this.health = 0;
+      }
+      
+    }
+    
+  }
+  
+  //Bounce back function after hit
+  this.bounceBack = function() {
+    
+    
+    
   }
 
   // display "sensor" positions

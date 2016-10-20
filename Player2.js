@@ -32,6 +32,13 @@ function Player2(x, y, world) {
   this.display = function() {
     imageMode(CORNER);
     image(this.currentImage, this.x, this.y);
+    //Display health
+    fill(0);
+    text( "Player Two Health", width-230, 80)
+    stroke(255,0,0);
+    strokeWeight(10);
+    line(width-130,100,width-(this.health+130),100);
+    strokeWeight(0)
   }
 
   // display "sensor" positions
