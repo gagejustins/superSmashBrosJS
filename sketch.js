@@ -53,10 +53,6 @@ function draw() {
   thePlayer1.display();
   thePlayer2.move();
   thePlayer2.display();
-<<<<<<< HEAD
   thePlayer1.checkHit(thePlayer2.x, thePlayer2.y);
 }
-=======
-  
-}
->>>>>>> origin/master
+
