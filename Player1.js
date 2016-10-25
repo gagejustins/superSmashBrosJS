@@ -8,13 +8,16 @@ function Player1(x, y, world) {
   this.world = world;
 
   // load & store our artwork
-  this.artworkLeft = loadImage('tiles/pikachu_left.png');
-  this.artworkRight = loadImage('tiles/pikachu_right.png');
-  this.artworkUp = loadImage('tiles/pikachu_up.png');
-  this.artworkDown = loadImage('tiles/pikachu_down.png');
+  this.artworkLeft = loadImage('falco/10.png');
+  this.artworkRight = loadImage('falco/3.png');
+  this.artworkUp = loadImage('falco/7.png');
+  this.artworkDown = loadImage('falco/2.png');
+  this.artworkNorm = loadImage('falco/1.png');
+  this.artworkShootRight = loadImage('falco/6.png');
+  this.artworkShootLeft = loadImage('falco/11.png');
 
   // assume we are pointing to the right
-  this.currentImage = this.artworkRight;
+  this.currentImage = this.artworkNorm;
 
   // define our desired movement speed
   this.speed = 3;
@@ -169,7 +172,7 @@ function Player1(x, y, world) {
       this.currentImage = this.artworkLeft;
       this.displaySensor("left");
     }
-    if (keyIsDown(100) || keyIsDown(68)) {
+    else if (keyIsDown(100) || keyIsDown(68)) {
       // see which tile is to our right
       var tile = world.getTile(this.right[0], this.right[1]);
       
@@ -186,7 +189,7 @@ function Player1(x, y, world) {
     
     // note that the "up' arrow now controls jumping and does not cause the character to 
     // directly move up
-    if (keyIsDown(119) || keyIsDown(87)) {
+    else if (keyIsDown(119) || keyIsDown(87)) {
       // see which tile is below us
       var tile = world.getTile(this.top[0], this.top[1]);
       
@@ -205,6 +208,21 @@ function Player1(x, y, world) {
       // change artwork
       this.currentImage = this.artworkUp;
       this.displaySensor("up");
-    }       
+    }
+    
+    //if the user hits e ==> falco will shoot right
+    else if (keyIsDown(69)){
+      this.currentImage = this.artworkShootRight;
+    }
+    
+    //if the user hits q ==> falco will shoot left
+    else if (keyIsDown(81)){
+      this.currentImage = this.artworkShootLeft;
+    }
+    
+    else{
+      this.currentImage = this.artworkNorm;
+    }
+    
   }
 }
