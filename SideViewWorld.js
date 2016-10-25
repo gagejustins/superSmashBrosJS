@@ -22,8 +22,8 @@ function SideViewWorld(params) {
   this.gravityMax = params.gravityMax;
 
   // load in all tile graphics
-  for (var i = 0; i < this.numTiles; i++) {
-    var tempTile = loadImage(this.tileFolder + "/" + i + ".png");
+  for (var i = 1; i < this.numTiles; i++) {
+    var tempTile = loadImage(this.tileFolder + "/" + i + ".jpg");
     this.tileLibrary.push(tempTile);
   }
 

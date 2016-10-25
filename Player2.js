@@ -8,11 +8,11 @@ function Player2(x, y, world) {
   this.world = world;
 
   // load & store our artwork
-  this.artworkLeft = loadImage('tiles/link_left.png');
-  this.artworkRight = loadImage('tiles/link_right.png');
-  this.artworkUp = loadImage('tiles/link_up.png');
-  this.artworkDown = loadImage('tiles/link_down.png');
-
+  this.artworkLeft = loadImage('tiles/pikachu_left.png');
+  this.artworkRight = loadImage('tiles/pikachu_right.png');
+  this.artworkUp = loadImage('tiles/pikachu_up.png');
+  this.artworkDown = loadImage('tiles/pikachu_down.png');
+  
   // assume we are pointing to the right
   this.currentImage = this.artworkRight;
 
