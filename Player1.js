@@ -39,6 +39,8 @@ function Player1(x, y, world) {
   this.punchingTimer = 0;
   this.maxPunchingTime = 40;
   
+  this.starPower=false;
+  
   // display our player
   this.display = function() {
     
