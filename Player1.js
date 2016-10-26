@@ -8,16 +8,16 @@ function Player1(x, y, world) {
   this.world = world;
 
   // load & store our artwork
-  this.artworkLeft = loadImage('falco/10.png');
-  this.artworkRight = loadImage('falco/3.png');
-  this.artworkUp = loadImage('falco/7.png');
-  this.artworkDown = loadImage('falco/2.png');
-  this.artworkNorm = loadImage('falco/1.png');
-  this.artworkShootRight = loadImage('falco/6.png');
-  this.artworkShootLeft = loadImage('falco/11.png');
+  this.artworkLeft = loadImage('tiles/falcon_left.gif');
+  this.artworkRight = loadImage('tiles/falcon_right.gif');
+  this.artworkUp = loadImage('tiles/falcon_up.gif');
+  this.artworkDown = loadImage('tiles/falcon_down.gif');
+  
+  this.artworkPunchLeft = loadImage('tiles/falcon_punchleft.gif');
+  this.artworkPunchRight = loadImage('tiles/falcon_punchright.gif');
 
   // assume we are pointing to the right
-  this.currentImage = this.artworkNorm;
+  this.currentImage = this.artworkRight;
 
   // define our desired movement speed
   this.speed = 3;
@@ -44,10 +44,22 @@ function Player1(x, y, world) {
     strokeWeight(0)
   }
   
+  this.isPunching = function() {
+    if(keyIsDown(69)) {
+      this.currentImage=this.artworkPunchRight;
+    } else if (keyIsDown(81)) {
+      this.currentImage=this.artworkPunchLeft;
+    }
+  }
+  
   //Check for hit
   this.checkHit = function(enemy_x, enemy_y) {
     
-    if ( dist(this.x, this.y, enemy_x, enemy_y) <= 40 && keyIsDown(16) ) {
+    this.isPunching();
+    
+    if ( dist(this.x, this.y, enemy_x, enemy_y) <= this.currentImage.width) {
+      
+      if( ( this.x<enemy_x && keyIsDown(191) ) ||  ( this.x>enemy_x && keyIsDown(16) ) ) {
       
       this.health -= 10;
       
@@ -58,14 +70,16 @@ function Player1(x, y, world) {
       
       this.bounceBack();
       
-    }
+      }
+      
+    }  
     
   }
   
   //Bounce back function after hit
   this.bounceBack = function() {
     
-    if(this.currentImage==this.artworkRight) {
+    if(keyIsDown(191)) {
       
       for(var i=0; i<60; i++) {
         // see which tile is to our left
@@ -78,7 +92,7 @@ function Player1(x, y, world) {
         }
       }
       
-    } else {
+    } else if (keyIsDown(16)) {
       
       for(var i=0; i<60; i++) {
         // see which tile is to our right
@@ -170,9 +184,9 @@ function Player1(x, y, world) {
 
       // change artwork
       this.currentImage = this.artworkLeft;
-      this.displaySensor("left");
+      //this.displaySensor("left");
     }
-    else if (keyIsDown(100) || keyIsDown(68)) {
+    if (keyIsDown(100) || keyIsDown(68)) {
       // see which tile is to our right
       var tile = world.getTile(this.right[0], this.right[1]);
       
@@ -184,12 +198,12 @@ function Player1(x, y, world) {
 
       // change artwork
       this.currentImage = this.artworkRight;
-      this.displaySensor("right");
+      //this.displaySensor("right");
     }
     
     // note that the "up' arrow now controls jumping and does not cause the character to 
     // directly move up
-    else if (keyIsDown(119) || keyIsDown(87)) {
+    if (keyIsDown(119) || keyIsDown(87)) {
       // see which tile is below us
       var tile = world.getTile(this.top[0], this.top[1]);
       
@@ -207,22 +221,7 @@ function Player1(x, y, world) {
 
       // change artwork
       this.currentImage = this.artworkUp;
-      this.displaySensor("up");
-    }
-    
-    //if the user hits e ==> falco will shoot right
-    else if (keyIsDown(69)){
-      this.currentImage = this.artworkShootRight;
-    }
-    
-    //if the user hits q ==> falco will shoot left
-    else if (keyIsDown(81)){
-      this.currentImage = this.artworkShootLeft;
-    }
-    
-    else{
-      this.currentImage = this.artworkNorm;
-    }
-    
+      //this.displaySensor("up");
+    }       
   }
 }
