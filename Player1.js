@@ -31,10 +31,20 @@ function Player1(x, y, world) {
   //define our health attribute
   this.health=100;
   
+  //Define timer parameters
+  this.framesToStayInState = 6;
+  this.framesInState = 0;
+  
+  //Punching
+  this.punchingTimer = 0;
+  this.maxPunchingTime = 40;
+  
   // display our player
   this.display = function() {
+    
     imageMode(CORNER);
     image(this.currentImage, this.x, this.y);
+    
     //Display health
     fill(0);
     text( "Player One Health: " + this.health, 70, 80)
@@ -42,24 +52,59 @@ function Player1(x, y, world) {
     strokeWeight(10);
     line(70,100,this.health+70,100);
     strokeWeight(0)
+    
+    //Call the punch function if appropriate
+    if (keyIsDown(69) && (this.punchingTimer <= 0)) {
+      this.PunchingRight = true;
+      this.isPunchingRight();
+    }
+    
+    else if (keyIsDown(81) && (this.punchingTimer <= 0)) {
+      this.PunchingLeft = true;
+      this.isPunchingLeft();
+    }
+    
+    //Increment the timer variable
+    this.framesInState += 1;
+    this.punchingTimer -= 1;
+  
+    //Don't let the timer get negative
+    if (this.punchingTimer <= 0) {
+      this.punchingTimer = 0;
+    }
+    
+    //Right after the punch, change variables to false
+    if (this.punchingTimer <= (this.maxPunchingTime - 5)) {
+      this.PunchingRight = false;
+      this.PunchingLeft = false;
+    }
+  
+    //If the timer variable goes past our limit, set it back to zero and reset
+    //the character image to down
+    if (this.framesInState >= this.framesToStayInState) {
+      
+      this.currentImage = this.artworkDown;
+      this.framesInState = 0;
+        
+    }
   }
   
-  this.isPunching = function() {
-    if(keyIsDown(69)) {
-      this.currentImage=this.artworkPunchRight;
-    } else if (keyIsDown(81)) {
-      this.currentImage=this.artworkPunchLeft;
-    }
+  this.isPunchingRight = function() {
+      this.currentImage = this.artworkPunchRight;
+      this.punchingTimer = this.maxPunchingTime;
+  }
+      
+  this.isPunchingLeft = function() {
+      this.currentImage = this.artworkPunchLeft;
+      this.punchingTimer = this.maxPunchingTime;
   }
   
   //Check for hit
   this.checkHit = function(enemy_x, enemy_y) {
     
-    this.isPunching();
-    
-    if ( dist(this.x, this.y, enemy_x, enemy_y) <= this.currentImage.width) {
+    if (dist(this.x, this.y, enemy_x, enemy_y) <= 50) {
       
-      if( ( this.x<enemy_x && keyIsDown(191) ) ||  ( this.x>enemy_x && keyIsDown(16) ) ) {
+      if ((thePlayer2.PunchingLeft === true) || (thePlayer2.PunchingRight === true)) {
       
       this.health -= 10;
       
@@ -79,7 +124,7 @@ function Player1(x, y, world) {
   //Bounce back function after hit
   this.bounceBack = function() {
     
-    if(keyIsDown(191)) {
+    if(thePlayer2.PunchingLeft == true) {
       
       for(var i=0; i<60; i++) {
         // see which tile is to our left
@@ -92,7 +137,7 @@ function Player1(x, y, world) {
         }
       }
       
-    } else if (keyIsDown(16)) {
+    } else if (thePlayer2.PunchingRight == true) {
       
       for(var i=0; i<60; i++) {
         // see which tile is to our right
@@ -109,19 +154,6 @@ function Player1(x, y, world) {
     
   }
 
-  // display "sensor" positions
-  this.displaySensor = function(direction) {
-    fill(255);
-    if (direction == "up") {
-      ellipse(this.top[0], this.top[1], 20, 20);
-    } else if (direction == "down") {
-      ellipse(this.bottom[0], this.bottom[1], 20, 20);
-    } else if (direction == "right") {
-      ellipse(this.right[0], this.right[1], 20, 20);
-    } else if (direction == "left") {
-      ellipse(this.left[0], this.left[1], 20, 20);
-    }
-  }
 
   // set our sensor positions (computed based on the position of the character and the
   // size of our graphic)

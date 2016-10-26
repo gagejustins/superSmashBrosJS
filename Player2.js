@@ -8,13 +8,13 @@ function Player2(x, y, world) {
   this.world = world;
 
   // load & store our artwork
-  this.artworkLeft = loadImage('tiles/falco/10.png');
-  this.artworkRight = loadImage('tiles/falco/3.png');
-  this.artworkUp = loadImage('tiles/falco/7.png');
-  this.artworkDown = loadImage('tiles/falco/9.png');
+  this.artworkLeft = loadImage('tiles/falcon_left.gif');
+  this.artworkRight = loadImage('tiles/falcon_right.gif');
+  this.artworkUp = loadImage('tiles/falcon_up.gif');
+  this.artworkDown = loadImage('tiles/falcon_down.gif');
   
-  this.artworkPunchLeft = loadImage('tiles/falco/13.png');
-  this.artworkPunchRight = loadImage('tiles/falco/12.png');
+  this.artworkPunchLeft = loadImage('tiles/falcon_punchleft.gif');
+  this.artworkPunchRight = loadImage('tiles/falcon_punchright.gif');
 
   // assume we are pointing to the right
   this.currentImage = this.artworkRight;
@@ -31,8 +31,17 @@ function Player2(x, y, world) {
   //define our health attribute
   this.health=100;
   
+  //Define timer parameters
+  this.framesToStayInState = 10;
+  this.framesInState = 0;
+  
+  //Punching
+  this.punchingTimer = 0;
+  this.maxPunchingTime = 40;
+  
   // display our player
   this.display = function() {
+    
     imageMode(CORNER);
     image(this.currentImage, this.x, this.y);
     //Display health
@@ -42,22 +51,61 @@ function Player2(x, y, world) {
     strokeWeight(10);
     line(width-130,100,width-(this.health+130),100);
     strokeWeight(0)
+    
+    //Call the punch function if appropriate
+    if (keyIsDown(16) && (this.punchingTimer <= 0)) {
+      this.PunchingRight = true;
+      this.isPunchingRight();
+    }
+    
+    else if (keyIsDown(191) && (this.punchingTimer <= 0)) {
+      this.PunchingLeft = true;
+      this.isPunchingLeft();
+    }
+    
+    //Increment the timer variables
+    this.framesInState += 1;
+    this.punchingTimer -= 1;
+  
+    //Don't let the timer get negative
+    if (this.punchingTimer <= 0) {
+      this.punchingTimer = 0;
+    }
+    
+    //Right after the punch, change variables to false
+    if (this.punchingTimer <= (this.maxPunchingTime - 5)) {
+      this.PunchingRight = false;
+      this.PunchingLeft = false;
+    }
+    
+    //If the timer variable goes past our limit, set it back to zero and reset
+    //the character image to down
+    if (this.framesInState >= this.framesToStayInState) {
+      
+      this.currentImage = this.artworkDown;
+      this.framesInState = 0;
+      
+    }
+    
   }
   
-  this.isPunching = function() {
-    if(keyIsDown(16)) {
-      this.currentImage=this.artworkPunchRight;
-    } else if (keyIsDown(191)) {
-      this.currentImage=this.artworkPunchLeft;
-    }
+  this.isPunchingRight = function() {
+      this.currentImage = this.artworkPunchRight;
+      this.punchingTimer = this.maxPunchingTime;
   }
+      
+  this.isPunchingLeft = function() {
+      this.currentImage = this.artworkPunchLeft;
+      this.punchingTimer = this.maxPunchingTime;
+  }
+  
   
   //Check for hit
   this.checkHit = function(enemy_x, enemy_y) {
     
-    if ( dist(this.x, this.y, enemy_x, enemy_y) <= this.currentImage.width) {
+    if (dist(this.x, this.y, enemy_x, enemy_y) <= 50) {
       
-      if( ( this.x<enemy_x && keyIsDown(81) ) ||  ( this.x>enemy_x && keyIsDown(69) ) ) {
+      if ((thePlayer1.PunchingLeft === true) || (thePlayer1.PunchingRight === true)) {
       
       this.health -= 10;
       
@@ -77,7 +125,7 @@ function Player2(x, y, world) {
   //Bounce back function after hit
   this.bounceBack = function() {
     
-    if(keyIsDown(81)) {
+    if (thePlayer1.PunchingLeft === true) {
       
       for(var i=0; i<60; i++) {
         // see which tile is to our left
@@ -90,7 +138,7 @@ function Player2(x, y, world) {
         }
       }
       
-    } else if (keyIsDown(69)){
+    } else if (thePlayer1.PunchingRight === true){
       
       for(var i=0; i<60; i++) {
         // see which tile is to our right
@@ -107,19 +155,6 @@ function Player2(x, y, world) {
     
   }
   
-  // display "sensor" positions
-  this.displaySensor = function(direction) {
-    fill(255);
-    if (direction == "up") {
-      ellipse(this.top[0], this.top[1], 20, 20);
-    } else if (direction == "down") {
-      ellipse(this.bottom[0], this.bottom[1], 20, 20);
-    } else if (direction == "right") {
-      ellipse(this.right[0], this.right[1], 20, 20);
-    } else if (direction == "left") {
-      ellipse(this.left[0], this.left[1], 20, 20);
-    }
-  }
 
   // set our sensor positions (computed based on the position of the character and the
   // size of our graphic)
@@ -134,8 +169,6 @@ function Player2(x, y, world) {
   this.move = function() {
     // refresh our "sensors" - these will be used for movement & collision detection
     this.refreshSensors();
-    
-    this.isPunching();
     
     // apply gravity to us every frame!
     // get the tile below us
