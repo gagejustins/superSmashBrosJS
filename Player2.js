@@ -107,7 +107,7 @@ function Player2(x, y, world) {
     
     if (dist(this.x, this.y, enemy_x, enemy_y) <= 50) {
       
-      if ((thePlayer1.PunchingLeft === true) || (thePlayer1.PunchingRight === true)) {
+      if ((thePlayer1.PunchingLeft === true && this.x<enemy_x) || (thePlayer1.PunchingRight === true && this.x>enemy_x)) {
       
       this.health -= 10;
       
