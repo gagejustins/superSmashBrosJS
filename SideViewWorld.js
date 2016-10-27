@@ -23,8 +23,9 @@ function SideViewWorld(params) {
 
   // load in all tile graphics
   for (var i = 0; i < this.numTiles; i++) {
-    var tempTile = loadImage(this.tileFolder + "/" + i + ".png");
+    var tempTile = loadImage(this.tileFolder + "/smash_map_" + i + ".jpg");
     this.tileLibrary.push(tempTile);
+    //console.log(this.tileFolder + "/smash_map_" + i + ".jpg");
   }
 
   // displayTile: draws a single tile at a specified location
@@ -34,10 +35,15 @@ function SideViewWorld(params) {
 
   // displayWorld: displays the current world
   this.displayWorld = function() {
-    for (var row = 0; row < this.tileMap.length; row += 1) {
-      for (var col = 0; col < this.tileMap[row].length; col += 1) {
+    for (var row = 0; row < this.tileMap.length; row ++) {
+      for (var col = 0; col < this.tileMap[row].length; col ++) {
+        
+        //console.log( this.tileMap[row][col] );
+        
         image(this.tileLibrary[ this.tileMap[row][col] ], col*this.tileSize, row*this.tileSize, this.tileSize, this.tileSize);
+      
       }
+      //console.log("Row Down: " + row);
     }
   }
   
