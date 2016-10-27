@@ -8,13 +8,13 @@ function Player2(x, y, world) {
   this.world = world;
 
   // load & store our artwork
-  this.artworkLeft = loadImage('tiles/falcon_left.gif');
-  this.artworkRight = loadImage('tiles/falcon_right.gif');
-  this.artworkUp = loadImage('tiles/falcon_up.gif');
-  this.artworkDown = loadImage('tiles/falcon_down.gif');
+  this.artworkLeft = loadImage('tiles/falco/10.png');
+  this.artworkRight = loadImage('tiles/falco/3.png');
+  this.artworkUp = loadImage('tiles/falco/7.png');
+  this.artworkDown = loadImage('tiles/falco/9.png');
   
-  this.artworkPunchLeft = loadImage('tiles/falcon_punchleft.gif');
-  this.artworkPunchRight = loadImage('tiles/falcon_punchright.gif');
+  this.artworkPunchLeft = loadImage('tiles/falco/13.png');
+  this.artworkPunchRight = loadImage('tiles/falco/12.png');
 
   // assume we are pointing to the right
   this.currentImage = this.artworkRight;

@@ -43,7 +43,7 @@ function preload() {
   theWorld = new SideViewWorld(worldParameters);
   thePlayer1 = new Player1(100, 100, theWorld);
   thePlayer2 = new Player2(500, 500, theWorld);
-  theItems = new Item(thePlayer1, thePlayer2);
+  theItems = new Item(thePlayer1, thePlayer2, theWorld);
 }
 
 function setup() {

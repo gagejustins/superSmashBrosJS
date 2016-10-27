@@ -1,7 +1,9 @@
-function Item(player1,player2) {
+function Item(player1,player2,world) {
   
   this.x;
   this.y;
+  
+  this.world=world;
   
   this.player1=player1;
   this.player2=player2;
@@ -22,8 +24,14 @@ function Item(player1,player2) {
     if (this.timer==(60*8)) {
       
       this.state=Math.floor(Math.random()*2);
+      
       this.x = random(100,width-100);
       this.y = random(100,height-100);
+      
+      while(this.world.isTileSolid(this.world.getTile(this.x,this.y))==true) {
+        this.x = random(100,width-100);
+        this.y = random(100,height-100);
+      }
       
       this.timer--;
       
