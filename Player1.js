@@ -44,6 +44,8 @@ function Player1(x, y, world) {
   
   this.starPower=false;
   
+  this.starPower=false;
+  
   // display our player
   this.display = function() {
     
@@ -110,7 +112,11 @@ function Player1(x, y, world) {
     
     if (dist(this.x, this.y, enemy_x, enemy_y) <= 50) {
       
+<<<<<<< HEAD
       if (((thePlayer2.PunchingLeft === true && enemy_x>this.x) || (thePlayer2.PunchingRight === true && enemy_x<this.x)) && (this.beingHit === false)) {
+=======
+      if ((thePlayer2.PunchingLeft === true && enemy_x>this.x) || (thePlayer2.PunchingRight === true && enemy_x<this.x)) {
+>>>>>>> origin/master
       
         this.health -= 10;
       
