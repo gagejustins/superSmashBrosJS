@@ -11,6 +11,8 @@ var theWorld;
 var thePlayer1;
 var thePlayer2;
 
+var theItems;
+
 // create an object to hold our "world parameters" - we will send this object into our
 // OverheadWorld to tell it how our world is organized
 var worldParameters = {
@@ -40,7 +42,8 @@ var worldParameters = {
 function preload() {
   theWorld = new SideViewWorld(worldParameters);
   thePlayer1 = new Player1(100, 100, theWorld);
-  thePlayer2 = new Player2(500, 500, theWorld);
+  thePlayer2 = new Player2(300, 300, theWorld);
+  theItems = new Item(thePlayer1, thePlayer2, theWorld);
 }
 
 function setup() {
@@ -50,6 +53,7 @@ function setup() {
 function draw() {
   
   theWorld.displayWorld()
+  theItems.display();
   thePlayer1.move();
   thePlayer1.display();
   thePlayer2.move();

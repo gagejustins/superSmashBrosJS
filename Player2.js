@@ -1,4 +1,5 @@
 function Player2(x, y, world) {
+  
   // store the player position
   this.x = x;
   this.y = y;
@@ -8,13 +9,13 @@ function Player2(x, y, world) {
   this.world = world;
 
   // load & store our artwork
-  this.artworkLeft = loadImage('tiles/falcon_left.gif');
-  this.artworkRight = loadImage('tiles/falcon_right.gif');
-  this.artworkUp = loadImage('tiles/falcon_up.gif');
-  this.artworkDown = loadImage('tiles/falcon_down.gif');
+  this.artworkLeft = loadImage('tiles/falco/10.png');
+  this.artworkRight = loadImage('tiles/falco/3.png');
+  this.artworkUp = loadImage('tiles/falco/7.png');
+  this.artworkDown = loadImage('tiles/falco/9.png');
   
-  this.artworkPunchLeft = loadImage('tiles/falcon_punchleft.gif');
-  this.artworkPunchRight = loadImage('tiles/falcon_punchright.gif');
+  this.artworkPunchLeft = loadImage('tiles/falco/13.png');
+  this.artworkPunchRight = loadImage('tiles/falco/12.png');
 
   // assume we are pointing to the right
   this.currentImage = this.artworkRight;
@@ -31,13 +32,18 @@ function Player2(x, y, world) {
   //define our health attribute
   this.health=100;
   
+  //Store whether a hit has registered
+  this.beingHit = false;
+  
   //Define timer parameters
   this.framesToStayInState = 10;
   this.framesInState = 0;
   
   //Punching
   this.punchingTimer = 0;
-  this.maxPunchingTime = 40;
+  this.maxPunchingTime = 60;
+  
+  this.starPower=false;
   
   // display our player
   this.display = function() {
@@ -70,6 +76,7 @@ function Player2(x, y, world) {
     //Don't let the timer get negative
     if (this.punchingTimer <= 0) {
       this.punchingTimer = 0;
+      thePlayer1.beingHit = false;
     }
     
     //Right after the punch, change variables to false
@@ -105,16 +112,19 @@ function Player2(x, y, world) {
     
     if (dist(this.x, this.y, enemy_x, enemy_y) <= 50) {
       
-      if ((thePlayer1.PunchingLeft === true) || (thePlayer1.PunchingRight === true)) {
+      if (((thePlayer1.PunchingLeft === true && this.x<enemy_x) || (thePlayer1.PunchingRight === true && this.x>enemy_x))  && (this.beingHit === false)) {
       
       this.health -= 10;
+      
+      this.bounceBack();
       
       //Set minimum health to 0
       if (this.health <= 0) {
         this.health = 0;
       }
       
-      this.bounceBack();
+      //Set boolean to make sure one hit can't subtract more than 10 health
+      this.beingHit = true;
       
       }
       

@@ -17,7 +17,7 @@ function Player1(x, y, world) {
   this.artworkPunchRight = loadImage('tiles/falcon_punchright.gif');
 
   // assume we are pointing to the right
-  this.currentImage = this.artworkRight;
+  this.currentImage = this.artworkDown;
 
   // define our desired movement speed
   this.speed = 3;
@@ -31,13 +31,18 @@ function Player1(x, y, world) {
   //define our health attribute
   this.health=100;
   
+  //Store whether a hit has registered
+  this.beingHit = false;
+  
   //Define timer parameters
   this.framesToStayInState = 6;
   this.framesInState = 0;
   
   //Punching
   this.punchingTimer = 0;
-  this.maxPunchingTime = 40;
+  this.maxPunchingTime = 60;
+  
+  this.starPower=false;
   
   // display our player
   this.display = function() {
@@ -71,6 +76,7 @@ function Player1(x, y, world) {
     //Don't let the timer get negative
     if (this.punchingTimer <= 0) {
       this.punchingTimer = 0;
+      thePlayer2.beingHit = false;
     }
     
     //Right after the punch, change variables to false
@@ -104,18 +110,21 @@ function Player1(x, y, world) {
     
     if (dist(this.x, this.y, enemy_x, enemy_y) <= 50) {
       
-      if ((thePlayer2.PunchingLeft === true) || (thePlayer2.PunchingRight === true)) {
+      if (((thePlayer2.PunchingLeft === true && enemy_x>this.x) || (thePlayer2.PunchingRight === true && enemy_x<this.x)) && (this.beingHit === false)) {
       
-      this.health -= 10;
+        this.health -= 10;
       
-      //Set minimum health to 0
-      if (this.health <= 0) {
-        this.health = 0;
-      }
+        this.bounceBack();
       
-      this.bounceBack();
+        //Set minimum health to 0
+        if (this.health <= 0) {
+          this.health = 0;
+        }
+
+        //Set boolean to make sure one hit can't subtract more than 10 health
+        this.beingHit = true;
       
-      }
+        }
       
     }  
     
