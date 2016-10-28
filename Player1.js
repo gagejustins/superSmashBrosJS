@@ -111,12 +111,8 @@ function Player1(x, y, world) {
   this.checkHit = function(enemy_x, enemy_y) {
     
     if (dist(this.x, this.y, enemy_x, enemy_y) <= 50) {
-      
-<<<<<<< HEAD
+
       if (((thePlayer2.PunchingLeft === true && enemy_x>this.x) || (thePlayer2.PunchingRight === true && enemy_x<this.x)) && (this.beingHit === false)) {
-=======
-      if ((thePlayer2.PunchingLeft === true && enemy_x>this.x) || (thePlayer2.PunchingRight === true && enemy_x<this.x)) {
->>>>>>> origin/master
       
         this.health -= 10;
       
@@ -139,7 +135,7 @@ function Player1(x, y, world) {
   //Bounce back function after hit
   this.bounceBack = function() {
     
-    if(thePlayer2.PunchingLeft == true) {
+    if(thePlayer2.PunchingLeft === true) {
       
       for(var i=0; i<60; i++) {
         // see which tile is to our left
@@ -152,7 +148,7 @@ function Player1(x, y, world) {
         }
       }
       
-    } else if (thePlayer2.PunchingRight == true) {
+    } else if (thePlayer2.PunchingRight === true) {
       
       for(var i=0; i<60; i++) {
         // see which tile is to our right
