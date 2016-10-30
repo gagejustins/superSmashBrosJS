@@ -13,6 +13,9 @@ var thePlayer2;
 
 var theItems;
 
+var startGame=false;
+var inPlay=false;
+
 // create an object to hold our "world parameters" - we will send this object into our
 // OverheadWorld to tell it how our world is organized
 var worldParameters = {
@@ -52,14 +55,52 @@ function setup() {
 
 function draw() {
   
-  theWorld.displayWorld()
-  theItems.display();
-  thePlayer1.move();
-  thePlayer1.display();
-  thePlayer2.move();
-  thePlayer2.display();
-  thePlayer1.checkHit(thePlayer2.x, thePlayer2.y);
-  thePlayer2.checkHit(thePlayer1.x, thePlayer1.y);
-  
+  if(!startGame) {
+    background(0);
+    textSize(32);
+    fill(255);
+    textAlign(CENTER);
+    text("Welcome to super Smash Bros. We hope you enjoy our game.",width/2,height/2-20);
+    text("Click the mouse to begin playing.",width/2,height/2+20);
+  }
+  else if (startGame && (thePlayer1.health>0 && thePlayer2.health>0)) {
+    textAlign(LEFT);
+    textSize(12);
+    inPlay=true;
+    theWorld.displayWorld()
+    theItems.display();
+    thePlayer1.move();
+    thePlayer1.display();
+    thePlayer2.move();
+    thePlayer2.display();
+    thePlayer1.checkHit(thePlayer2.x, thePlayer2.y);
+    thePlayer2.checkHit(thePlayer1.x, thePlayer1.y);
+  } else if (thePlayer1.health == 0 || thePlayer2.health == 0) {
+    inPlay=false;
+    background(0);
+    textSize(32);
+    fill(255);
+    textAlign(CENTER);
+    text("Game Over!",width/2,height/2-40);
+    text("Player 1 Had: " + thePlayer1.health + " ; Player 2 Had: " + thePlayer2.health,width/2,height/2);
+    text("Click the mouse to restart the game.",width/2,height/2+40);
+  }
+
+}
+
+function mousePressed() {
+  if (!inPlay) {
+    startGame=true;
+    restartGame()
+  }
+}
+
+function restartGame() {
+  thePlayer1.health=100;
+  thePlayer1.x=100;
+  thePlayer1.y=100;
+  thePlayer2.health=100;
+  thePlayer2.x=300;
+  thePlayer2.y=300;
 }
 
