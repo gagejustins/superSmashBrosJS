@@ -9,16 +9,22 @@ function Player2(x, y, world) {
   this.world = world;
 
   // load & store our artwork
-  this.artworkLeft = loadImage('tiles/falco/10.png');
-  this.artworkRight = loadImage('tiles/falco/3.png');
-  this.artworkUp = loadImage('tiles/falco/7.png');
-  this.artworkDown = loadImage('tiles/falco/9.png');
+  // this.artworkLeft = loadImage('tiles/falco/10.png');
+  // this.artworkRight = loadImage('tiles/falco/3.png');
+  // this.artworkUp = loadImage('tiles/falco/7.png');
+  // this.artworkDown = loadImage('tiles/falco/9.png');
   
-  this.artworkPunchLeft = loadImage('tiles/falco/13.png');
-  this.artworkPunchRight = loadImage('tiles/falco/12.png');
+  this.animationDown = new AnimationSequence('tiles/sonicdown', 13, 5);
+  this.animationLeft = new AnimationSequence('tiles/sonicleft', 4, 8);
+  this.animationRight = new AnimationSequence('tiles/sonicright', 4, 8);
+  this.animationUp = new AnimationSequence('tiles/sonicup', 7, 8);
+  // this.animationCurrent = this.animationRight;
+  
+  // this.artworkPunchLeft = loadImage('tiles/falco/13.png');
+  // this.artworkPunchRight = loadImage('tiles/falco/12.png');
 
   // assume we are pointing to the right
-  this.currentImage = this.artworkDown;
+  this.animationCurrent = this.animationDown;
 
   // define our desired movement speed
   this.speed = 3;
@@ -51,7 +57,8 @@ function Player2(x, y, world) {
   this.display = function() {
     
     imageMode(CORNER);
-    image(this.currentImage, this.x, this.y);
+    // image(this.currentImage, this.x, this.y);
+    this.animationCurrent.display(this.x, this.y);
     //Display health
     fill(0);
     text( "Player Two Health: " + this.health, width-230, 80)
@@ -171,10 +178,10 @@ function Player2(x, y, world) {
   // set our sensor positions (computed based on the position of the character and the
   // size of our graphic)
   this.refreshSensors = function() {
-    this.left = [this.x, this.y + this.currentImage.height / 2];
-    this.right = [this.x + this.currentImage.width, this.y + this.currentImage.height / 2];
-    this.top = [this.x + this.currentImage.width / 2, this.y];
-    this.bottom = [this.x + this.currentImage.width / 2, this.y + this.currentImage.height];
+    this.left = [this.x, this.y + 60 / 2];
+    this.right = [this.x + 60, this.y + 60 / 2];
+    this.top = [this.x + 60 / 2, this.y];
+    this.bottom = [this.x + 60 / 2, this.y + 60];
   }
 
   // move our character
@@ -228,7 +235,7 @@ function Player2(x, y, world) {
       }
 
       // change artwork
-      this.currentImage = this.artworkLeft;
+      this.animationCurrent = this.animationLeft;
       //this.displaySensor("left");
     }
     if (keyIsDown(RIGHT_ARROW)) {
@@ -242,7 +249,7 @@ function Player2(x, y, world) {
       }
 
       // change artwork
-      this.currentImage = this.artworkRight;
+      this.animationCurrent = this.animationRight;
       //this.displaySensor("right");
     }
     
@@ -265,8 +272,53 @@ function Player2(x, y, world) {
       }
 
       // change artwork
-      this.currentImage = this.artworkUp;
+      this.animationCurrent = this.animationUp;
       //this.displaySensor("up");
     }       
+  }
+}
+
+
+function AnimationSequence(folder, numFrames, frameDelay) {
+  // store a reference to the folder that holds our artwork files
+  this.folder = folder;
+  
+  // store our frameDelay variable - this variable is used to slow down
+  // the animation as necessary
+  this.frameDelay = frameDelay;
+  this.currentFrameDelay = 0;
+  
+  // load in all of our artwork into an array
+  this.artwork = [];
+  for (var i = 0; i < numFrames; i++) {
+    var tempFrame = loadImage(folder + "/frame0" + i + ".png");
+    this.artwork.push( tempFrame );
+  }
+  
+  // currentFrame keeps track of where we are in our animation cycle
+  this.currentFrame = 0;
+  
+  // display function
+  this.display = function(x, y) {
+    // draw the current frame of animation
+    image( this.artwork[ this.currentFrame ], x, y)
+
+    // move to the next frame of animation if we have fulfilled our "frame delay"
+    if (this.currentFrameDelay >= this.frameDelay) {    
+
+      // reset currentFrameDelay
+      this.currentFrameDelay = 0;
+      
+      // advance to the next frame (which may be frame 0 if we reach the end)
+      this.currentFrame += 1;
+      if (this.currentFrame == this.artwork.length) {
+        this.currentFrame = 0;
+      }
+    }
+    
+    // otherwise increase frame delay by one
+    else {
+      this.currentFrameDelay += 1;
+    }
   }
 }

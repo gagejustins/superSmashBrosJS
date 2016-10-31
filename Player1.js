@@ -8,16 +8,24 @@ function Player1(x, y, world) {
   this.world = world;
 
   // load & store our artwork
-  this.artworkLeft = loadImage('tiles/falcon_left.gif');
-  this.artworkRight = loadImage('tiles/falcon_right.gif');
-  this.artworkUp = loadImage('tiles/falcon_up.gif');
-  this.artworkDown = loadImage('tiles/falcon_down.gif');
+  // this.artworkLeft = loadImage('tiles/falcon_left.gif');
+  // this.artworkRight = loadImage('tiles/falcon_right.gif');
+  // this.artworkUp = loadImage('tiles/falcon_up.gif');
+  // this.artworkDown = loadImage('tiles/falcon_down.gif');
+  
+  this.animationDown = new AnimationSequence('tiles/OrcDown', 6, 5);
+  this.animationLeft = new AnimationSequence('tiles/OrcLeft', 6, 8);
+  this.animationRight = new AnimationSequence('tiles/OrcRight', 6, 8);
+  this.animationUp = new AnimationSequence('tiles/OrcUp', 4, 8);
+  // this.animationPunchLeft = AnimationSequence('tiles/punchleft',6,5);
+  // this.animationright = AnimationSequence('tiles/punchleft',6,5);
   
   this.artworkPunchLeft = loadImage('tiles/falcon_punchleft.gif');
   this.artworkPunchRight = loadImage('tiles/falcon_punchright.gif');
 
   // assume we are pointing to the right
-  this.currentImage = this.artworkDown;
+  // this.currentImage = this.artworkDown;
+  this.animationCurrent = this.animationDown;
 
   // define our desired movement speed
   this.speed = 3;
@@ -50,7 +58,8 @@ function Player1(x, y, world) {
   this.display = function() {
     
     imageMode(CORNER);
-    image(this.currentImage, this.x, this.y);
+    // image(this.currentImage, this.x, this.y);
+    this.animationCurrent.display(this.x, this.y);
     
     //Display health
     fill(0);
@@ -63,11 +72,13 @@ function Player1(x, y, world) {
     //Call the punch function if appropriate
     if (keyIsDown(69) && (this.punchingTimer <= 0)) {
       this.PunchingRight = true;
+      // this.animationCurrent = this.animationPunchLeft;
       this.isPunchingRight();
     }
     
     else if (keyIsDown(81) && (this.punchingTimer <= 0)) {
       this.PunchingLeft = true;
+      // this.animationCurrent = this.animationPunchLeft;
       this.isPunchingLeft();
     }
     
@@ -99,11 +110,13 @@ function Player1(x, y, world) {
   
   this.isPunchingRight = function() {
       this.currentImage = this.artworkPunchRight;
+      // this.animationCurrent = this.animationPunchRight;
       this.punchingTimer = this.maxPunchingTime;
   }
       
   this.isPunchingLeft = function() {
       this.currentImage = this.artworkPunchLeft;
+      // this.animationCurrent = this.animationPunchLeft;
       this.punchingTimer = this.maxPunchingTime;
   }
   
@@ -169,10 +182,10 @@ function Player1(x, y, world) {
   // set our sensor positions (computed based on the position of the character and the
   // size of our graphic)
   this.refreshSensors = function() {
-    this.left = [this.x, this.y + this.currentImage.height / 2];
-    this.right = [this.x + this.currentImage.width, this.y + this.currentImage.height / 2];
-    this.top = [this.x + this.currentImage.width / 2, this.y];
-    this.bottom = [this.x + this.currentImage.width / 2, this.y + this.currentImage.height];
+    this.left = [this.x, this.y + 60 / 2];
+    this.right = [this.x + 60, this.y + 60 / 2];
+    this.top = [this.x + 60 / 2, this.y];
+    this.bottom = [this.x + 60 / 2, this.y + 60];
   }
 
   // move our character
@@ -226,7 +239,8 @@ function Player1(x, y, world) {
       }
 
       // change artwork
-      this.currentImage = this.artworkLeft;
+      // this.currentImage = this.artworkLeft;
+      this.animationCurrent = this.animationLeft;
       //this.displaySensor("left");
     }
     if (keyIsDown(100) || keyIsDown(68)) {
@@ -240,7 +254,8 @@ function Player1(x, y, world) {
       }
 
       // change artwork
-      this.currentImage = this.artworkRight;
+      // this.currentImage = this.artworkRight;
+      this.animationCurrent = this.animationRight;
       //this.displaySensor("right");
     }
     
@@ -263,8 +278,58 @@ function Player1(x, y, world) {
       }
 
       // change artwork
-      this.currentImage = this.artworkUp;
+      // this.currentImage = this.artworkUp;
+      this.animationCurrent = this.animationUp;
       //this.displaySensor("up");
-    }       
+    }
+    
+    // if(keyIsDown(81)){
+    //   this.animationCurrent = this.animationPunchLeft;
+    // }
+  }
+  
+}
+
+function AnimationSequence(folder, numFrames, frameDelay) {
+  // store a reference to the folder that holds our artwork files
+  this.folder = folder;
+  
+  // store our frameDelay variable - this variable is used to slow down
+  // the animation as necessary
+  this.frameDelay = frameDelay;
+  this.currentFrameDelay = 0;
+  
+  // load in all of our artwork into an array
+  this.artwork = [];
+  for (var i = 0; i < numFrames; i++) {
+    var tempFrame = loadImage(folder + "/frame0" + i + ".png");
+    this.artwork.push( tempFrame );
+  }
+  
+  // currentFrame keeps track of where we are in our animation cycle
+  this.currentFrame = 0;
+  
+  // display function
+  this.display = function(x, y) {
+    // draw the current frame of animation
+    image( this.artwork[ this.currentFrame ], x, y)
+
+    // move to the next frame of animation if we have fulfilled our "frame delay"
+    if (this.currentFrameDelay >= this.frameDelay) {    
+
+      // reset currentFrameDelay
+      this.currentFrameDelay = 0;
+      
+      // advance to the next frame (which may be frame 0 if we reach the end)
+      this.currentFrame += 1;
+      if (this.currentFrame == this.artwork.length) {
+        this.currentFrame = 0;
+      }
+    }
+    
+    // otherwise increase frame delay by one
+    else {
+      this.currentFrameDelay += 1;
+    }
   }
 }
