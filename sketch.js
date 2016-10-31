@@ -47,6 +47,13 @@ function preload() {
   thePlayer1 = new Player1(100, 100, theWorld);
   thePlayer2 = new Player2(300, 300, theWorld);
   theItems = new Item(thePlayer1, thePlayer2, theWorld);
+  
+  crowdSound = loadSound("sound/Crowd Cheering.wav")
+  itemSound = loadSound("sound/Item Appear.wav")
+  jumpSound = loadSound("sound/Jump 2.wav")
+  hitSound = loadSound("sound/Moderate Hit.wav")
+  whiffSound = loadSound("sound/Moderate Whiff.wav")
+  
 }
 
 function setup() {

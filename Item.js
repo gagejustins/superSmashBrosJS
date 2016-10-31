@@ -33,6 +33,8 @@ function Item(player1,player2,world) {
         this.y = random(100,height-100);
       }
       
+      itemSound.play();
+      
       this.timer--;
       
     } else if (this.timer>0) {
