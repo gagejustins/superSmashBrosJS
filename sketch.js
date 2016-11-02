@@ -56,10 +56,10 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1000,600);
-  // theCanvas.style('display', 'block');
-  // theCanvas.style('margin', 'auto');
-  // theCanvas.parent("#canvas");
+  var theCanvas = createCanvas(1000,600);
+  theCanvas.style('display', 'block');
+  theCanvas.style('margin', 'auto');
+  theCanvas.parent("#canvas");
   theme.loop();
 }
 
