@@ -57,9 +57,9 @@ function preload() {
 
 function setup() {
   createCanvas(1000,600);
-  theCanvas.style('display', 'block');
-  theCanvas.style('margin', 'auto');
-  theCanvas.parent("#canvas");
+  // theCanvas.style('display', 'block');
+  // theCanvas.style('margin', 'auto');
+  // theCanvas.parent("#canvas");
   theme.loop();
 }
 
