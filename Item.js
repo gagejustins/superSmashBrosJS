@@ -67,7 +67,7 @@ function Item(player1,player2,world) {
         // this.currentArtwork=this.fruitImage;
         
         imageMode(CORNER);
-        this.animationTomato.display(this.x, this.y);
+        this.animationStar.display(this.x, this.y);
         
         if (this.playerOneGrabbed()) {
           
