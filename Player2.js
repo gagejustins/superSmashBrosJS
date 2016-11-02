@@ -18,6 +18,8 @@ function Player2(x, y, world) {
   this.animationLeft = new AnimationSequence('tiles/sonicleft', 4, 8);
   this.animationRight = new AnimationSequence('tiles/sonicright', 4, 8);
   this.animationUp = new AnimationSequence('tiles/sonicup', 7, 8);
+  this.animationPunchRight = new AnimationSequence('tiles/sonickattackright', 7, 8);
+  this.animationPunchLeft = new AnimationSequence('tiles/sonicattackleft', 8, 8);
   // this.animationCurrent = this.animationRight;
   
   // this.artworkPunchLeft = loadImage('tiles/falco/13.png');
@@ -274,7 +276,23 @@ function Player2(x, y, world) {
       // change artwork
       this.animationCurrent = this.animationUp;
       //this.displaySensor("up");
-    }       
+    }
+    
+    if(keyIsDown(16)){
+      this.animationCurrent = this.animationPunchRight;
+    }
+    
+    if(keyIsDown(191)){
+      this.animationCurrent = this.animationPunchLeft;
+    }
+    
+    // if(keyIsDown(16)){
+    //   this.animationCurrent = this.animationPunchLeft;
+    // }
+    
+    // if(keyIsDown(191){
+    //   this.animationCurrent = this.animationPunchRight;
+    // }
   }
 }
 

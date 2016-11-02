@@ -7,18 +7,12 @@ function Player1(x, y, world) {
   // tiles that are in our path
   this.world = world;
 
-  // load & store our artwork
-  // this.artworkLeft = loadImage('tiles/falcon_left.gif');
-  // this.artworkRight = loadImage('tiles/falcon_right.gif');
-  // this.artworkUp = loadImage('tiles/falcon_up.gif');
-  // this.artworkDown = loadImage('tiles/falcon_down.gif');
-  
   this.animationDown = new AnimationSequence('tiles/OrcDown', 6, 5);
   this.animationLeft = new AnimationSequence('tiles/OrcLeft', 6, 8);
   this.animationRight = new AnimationSequence('tiles/OrcRight', 6, 8);
   this.animationUp = new AnimationSequence('tiles/OrcUp', 4, 8);
-  // this.animationPunchLeft = AnimationSequence('tiles/punchleft',6,5);
-  // this.animationright = AnimationSequence('tiles/punchleft',6,5);
+  this.animationPunchLeft = new AnimationSequence('tiles/punchleft', 6, 8);
+  this.animationPunchRight = new AnimationSequence('tiles/punchright', 6, 8);
   
   this.artworkPunchLeft = loadImage('tiles/falcon_punchleft.gif');
   this.artworkPunchRight = loadImage('tiles/falcon_punchright.gif');
@@ -279,9 +273,22 @@ function Player1(x, y, world) {
 
       // change artwork
       // this.currentImage = this.artworkUp;
-      this.animationCurrent = this.animationUp;
+      this.animationCurrent = this.animationPunchLeft;
       //this.displaySensor("up");
     }
+    
+    if(keyIsDown(69)){
+      this.animationCurrent = this.animationPunchRight;
+    }
+    
+    if(keyIsDown(81)){
+      this.animationCurrent = this.animationPunchLeft;
+    }
+    
+    // else{
+    //   this.animationCurrent = this.animationDown;
+    // }
+    
     
     // if(keyIsDown(81)){
     //   this.animationCurrent = this.animationPunchLeft;
