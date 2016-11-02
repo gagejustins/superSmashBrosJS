@@ -114,5 +114,7 @@ function restartGame() {
   thePlayer2.health=100;
   thePlayer2.x=300;
   thePlayer2.y=300;
+  theItems.timer=0;
+  theItems.offTimer=0;
 }
 
