@@ -48,7 +48,10 @@ function preload() {
   thePlayer2 = new Player2(300, 300, theWorld);
   theItems = new Item(thePlayer1, thePlayer2, theWorld);
   
+<<<<<<< HEAD
   theme = loadSound("sound/theme.mp3")
+=======
+>>>>>>> origin/master
   crowdSound = loadSound("sound/Crowd Cheering.wav")
   itemSound = loadSound("sound/Item Appear.wav")
   jumpSound = loadSound("sound/Jump 2.wav")
@@ -76,7 +79,6 @@ function draw() {
     text("Click the mouse to begin playing.",width/2,height/2+20);
   }
   else if (startGame && (thePlayer1.health>0 && thePlayer2.health>0)) {
-    
     textAlign(LEFT);
     textSize(12);
     inPlay=true;

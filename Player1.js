@@ -267,6 +267,8 @@ function Player1(x, y, world) {
         // negate jump power
         this.jumpPower = 0;
       }
+      
+      jumpSound.play();
 
       // change artwork
       this.currentImage = this.artworkUp;
