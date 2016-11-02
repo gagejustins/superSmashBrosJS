@@ -125,10 +125,19 @@ function Player1(x, y, world) {
 
         //Set boolean to make sure one hit can't subtract more than 10 health
         this.beingHit = true;
+        hitSound.play();
       
         }
-      
-    }  
+        
+        if(!this.beingHit && (thePlayer2.PunchingLeft || thePlayer2.PunchingRight)) {
+          whiffSound.play();
+        }
+    } 
+  
+    
+    
+    
+    
     
   }
   
@@ -261,6 +270,8 @@ function Player1(x, y, world) {
         // negate jump power
         this.jumpPower = 0;
       }
+      
+      jumpSound.play();
 
     }
     

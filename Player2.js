@@ -137,10 +137,18 @@ function Player2(x, y, world) {
       
       //Set boolean to make sure one hit can't subtract more than 10 health
       this.beingHit = true;
-      
+      hitSound.play();
       }
       
-    }  
+    if(!this.beingHit && (thePlayer1.PunchingLeft || thePlayer1.PunchingRight)) {
+      whiffSound.play();
+    }
+      
+    }
+    
+    // if(!this.beingHit && (thePlayer2.PunchingLeft || thePlayer2.PunchingRight)) {
+    //   whiffSound.play();
+    // }
     
   }
   
@@ -277,6 +285,7 @@ function Player2(x, y, world) {
       // change artwork
       this.animationCurrent = this.animationUp;
       //this.displaySensor("up");
+      jumpSound.play();
     }
     
   }

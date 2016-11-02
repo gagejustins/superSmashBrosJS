@@ -8,11 +8,11 @@ function Item(player1,player2,world) {
   this.player1=player1;
   this.player2=player2;
   
-  this.starImage=loadImage("tiles/star.png");
-  this.fruitImage=loadImage("tiles/health1.png");
-  this.heartImage=loadImage("tiles/health2.png");
+  this.animationHeart = new AnimationSequence('tiles/heart', 17, 8);
+  this.animationStar = new AnimationSequence('tiles/star', 16, 8);
+  this.animationTomato = new AnimationSequence('tiles/tomato', 1, 8);
   
-  this.currentArtwork;
+  // this.currentArtwork;
   
   this.state;
   
@@ -43,10 +43,10 @@ function Item(player1,player2,world) {
     
       if(this.state==2) {
         
-        this.currentArtwork=this.starImage;
+        // this.currentArtwork=this.starImage;
          
         imageMode(CENTER);
-        image(this.currentArtwork, this.x, this.y);
+        this.animationStar.display(this.x, this.y);
         
         if (this.playerOneGrabbed()) {
           
@@ -64,10 +64,10 @@ function Item(player1,player2,world) {
         
       } else if (this.state==1) {
         
-        this.currentArtwork=this.fruitImage;
+        // this.currentArtwork=this.fruitImage;
         
         imageMode(CORNER);
-        image(this.currentArtwork, this.x, this.y);
+        this.animationTomato.display(this.x, this.y);
         
         if (this.playerOneGrabbed()) {
           
@@ -85,10 +85,10 @@ function Item(player1,player2,world) {
         
       } else if (this.state==0) {
         
-        this.currentArtwork=this.heartImage;
+        // this.currentArtwork=this.heartImage;
         
         imageMode(CORNER);
-        image(this.currentArtwork, this.x, this.y);
+        this.animationHeart.display(this.x, this.y);
         
         if (this.playerOneGrabbed()) {
           
