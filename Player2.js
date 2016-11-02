@@ -18,8 +18,8 @@ function Player2(x, y, world) {
   this.animationLeft = new AnimationSequence('tiles/sonicleft', 4, 8);
   this.animationRight = new AnimationSequence('tiles/sonicright', 4, 8);
   this.animationUp = new AnimationSequence('tiles/sonicup', 7, 8);
-  this.animationPunchRight = new AnimationSequence('tiles/sonickattackright', 7, 8);
-  this.animationPunchLeft = new AnimationSequence('tiles/sonicattackleft', 8, 8);
+  this.animationPunchRight = new AnimationSequence('tiles/sonickattackright', 7, 5);
+  this.animationPunchLeft = new AnimationSequence('tiles/sonicattackleft', 7, 5);
   // this.animationCurrent = this.animationRight;
   
   // this.artworkPunchLeft = loadImage('tiles/falco/13.png');
@@ -285,6 +285,10 @@ function Player2(x, y, world) {
     if(keyIsDown(191)){
       this.animationCurrent = this.animationPunchLeft;
     }
+    
+    // else{
+    //   this.animationCurrent = this.animationDown;
+    // }
     
     // if(keyIsDown(16)){
     //   this.animationCurrent = this.animationPunchLeft;
