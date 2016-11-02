@@ -71,13 +71,13 @@ function Item(player1,player2,world) {
         
         if (this.playerOneGrabbed()) {
           
-          this.player1.health=min(this.player1.health,this.player1.health+10);
+          this.player1.health=min(100,this.player1.health+10);
           
           this.timer=0;
           
         } else if (this.playerTwoGrabbed()) {
           
-          this.player2.health=min(this.player2.health,this.player2.health+10);
+          this.player2.health=min(100,this.player2.health+10);
           
           this.timer=0;
           
